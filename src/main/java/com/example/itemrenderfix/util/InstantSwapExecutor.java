@@ -12,7 +12,7 @@ public class InstantSwapExecutor {
         if (client.player == null || client.gameMode == null) return;
 
         Inventory inventory = client.player.getInventory();
-        int originalSlot = inventory.selected;
+        int originalSlot = inventory.selected; // Keeping standard field check
         int targetSlot = -1;
 
         for (int i = 0; i < 9; i++) {
@@ -25,6 +25,7 @@ public class InstantSwapExecutor {
 
         if (targetSlot == -1 || targetSlot == originalSlot) return;
 
+        // Use the proper package assignment synchronization logic for modern versions
         inventory.selected = targetSlot;
         client.player.connection.send(new ServerboundSetCarriedItemPacket(targetSlot));
 
@@ -34,4 +35,5 @@ public class InstantSwapExecutor {
         inventory.selected = originalSlot;
         client.player.connection.send(new ServerboundSetCarriedItemPacket(originalSlot));
     }
+}
 }
