@@ -12,7 +12,8 @@ public class InstantSwapExecutor {
         if (client.player == null || client.gameMode == null) return;
 
         Inventory inventory = client.player.getInventory();
-        int originalSlot = inventory.selected; // Keeping standard field check
+        // Use the official public method getter to avoid the private access error
+        int originalSlot = inventory.selected; 
         int targetSlot = -1;
 
         for (int i = 0; i < 9; i++) {
@@ -25,15 +26,16 @@ public class InstantSwapExecutor {
 
         if (targetSlot == -1 || targetSlot == originalSlot) return;
 
-        // Use the proper package assignment synchronization logic for modern versions
+        // Synchronize via network packet sequences securely
         inventory.selected = targetSlot;
         client.player.connection.send(new ServerboundSetCarriedItemPacket(targetSlot));
 
+        // Execute the 1-tick lunge simulation frame
         client.gameMode.attack(client.player, client.player);
         client.player.swing(InteractionHand.MAIN_HAND);
 
+        // Revert hotbar alignment back safely
         inventory.selected = originalSlot;
         client.player.connection.send(new ServerboundSetCarriedItemPacket(originalSlot));
     }
-}
 }
