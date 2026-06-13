@@ -1,0 +1,12 @@
+{
+  "required": true,
+  "package": "com.example.itemrenderfix.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [],
+  "client": [
+    "MinecraftMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
